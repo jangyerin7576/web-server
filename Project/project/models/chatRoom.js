@@ -8,11 +8,15 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     createdDate: {
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW
     },
     hostNickname: {
       type: Sequelize.STRING
     }
+  },
+  {
+    timestamps: false
   });
   return chatRoom; 
 }

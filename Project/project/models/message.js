@@ -6,7 +6,8 @@ module.exports = (sequelize, Sequelize) => {
     },
     date: {
       type: Sequelize.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: Sequelize.NOW
     },
     recipient: {
       type: Sequelize.STRING
@@ -17,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
     content: {
       type: Sequelize.STRING
     }
+  },
+  {
+    timestamps: false
   });
   return message;
 }

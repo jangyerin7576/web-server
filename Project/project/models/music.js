@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) => {
     releaseDate: {
       type: Sequelize.DATE
     }
+  },
+  {
+    timestamps: false
   });
   return music;
 }

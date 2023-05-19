@@ -18,17 +18,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     phone: {
       type: Sequelize.STRING
-    },
-    createdAt: {
-      allowNull: true,
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.fn("NOW") 
-   },
-   updatedAt: {
-      allowNull: true,
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.fn("NOW")
-   }
+    }
+  },
+  {
+    timestamps: false
   });
   return member;
 }

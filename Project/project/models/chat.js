@@ -1,9 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
   const chat = sequelize.define("chat", {
-    chatRoomNo: {
-      type: Sequelize.INTEGER,
-      primaryKey: true
-    },
     chatNo: {
       type: Sequelize.INTEGER,
       primaryKey: true
@@ -12,8 +8,13 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     time: {
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW
     }
-  });
+  },
+  {
+    timestamps: false
+  }
+  );
   return chat; 
 }

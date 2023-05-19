@@ -1,13 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
   const createChatRoom = sequelize.define("createChatRoom", {
-    memberId: {
-      type: Sequelize.INTEGER,
-      primaryKey: true
-    },
-    chatRoomNo: {
-      type: Sequelize.INTEGER,
-      primaryKey: true
-    },
     authorize: {
       type: Sequelize.STRING
     },
@@ -19,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false
     }
+  },
+  {
+    timestamps: false
   });
   return createChatRoom; 
 }
