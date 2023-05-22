@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify API Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+    }
+
+    #search-results {
+      margin-top: 20px;
+    }
+
+    .track-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .track-item img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .track-info {
+      flex: 1;
+    }
+
+    .track-name {
+      font-weight: bold;
+    }
+
+    .track-artists {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Spotify API Demo</h1>
+
+  <div>
+    <input type="text" id="search-input" placeholder="Search for a track">
+    <button id="search-button">Search</button>
+  </div>
+
+  <div id="search-results"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('search-input');
+      const searchButton = document.getElementById('search-button');
+      const searchResults = document.getElementById('search-results');
+
+      searchButton.addEventListener('click', () => {
+        const query = searchInput.value.trim();
+
+        if (query !== '') {
+          searchTracks(query);
+        }
+      });
+
+      async function searchTracks(query) {
+        try {
+          const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+          const data = await response.json();
+
+          displayResults(data.tracks.items);
+        } catch (error) {
+          console.error('Error searching tracks:', error);
+          searchResults.innerHTML = '<p>Error searching tracks. Please try again later.</p>';
+        }
+      }
+
+      function displayResults(tracks) {
+        if (tracks.length === 0) {
+          searchResults.innerHTML = '<p>No tracks found.</p>';
+          return;
+        }
+
+        const trackItems = tracks.map(track => {
+          const artists = track.artists.map(artist => artist.name).join(', ');
+          return `<div class="track-item">
+                    <img src="${track.album.images[0].url}" alt="Album Artwork">
+                    <div class="track-info">
+                      <p class="track-name">${track.name}</p>
+                      <p class="track-artists">${artists}</p>
+                      <audio controls>
+                        <source src="${track.preview_url}" type="audio/mpeg">
+                      </audio>
+                    </div>
+                  </div>`;
+        });
+
+        searchResults.innerHTML = trackItems.join('');
+      }
+    });
+  </script>
+</body>
+</html>

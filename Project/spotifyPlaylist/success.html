@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>로그인 성공</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    p {
+      color: #666;
+    }
+
+    button {
+      background-color: #1DB954;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1ed760;
+    }
+  </style>
+</head>
+<body>
+  <h1>로그인에 성공했습니다.</h1>
+  <p>앱으로 돌아가서 다른 작업을 진행하세요.</p>
+
+  <button onclick="createPlaylist()">플레이리스트 생성</button>
+
+  <script>
+    // 프론트로 Access Token 전달
+    window.opener.postMessage('success', '*');
+    window.close();
+
+    function createPlaylist() {
+      // Access Token과 플레이리스트 이름 가져오기
+      const accessToken = 'BQC4PvnaMi9kUShUEgC_JWMDvIKzJYpOYmn93Q5nI4ovBUvlXhKyxrA79eT9veg_bt3iZAbDbIjiGglVyspw89JIMTqiu5gE-ukTcgwB8G3u5vnpiGhBx7OnhvfMoSXCVSrBqd40YYzYv9p3eY1O6TN8ETx_USvMIHHEBewGhDettfmKdvSdWzCE4lE9kVtGW8ISrFDGOACrRd2cHl--vVlgQXY' // 서버에서 전달한 Access Token으로 업데이트
+      const playlistName = '새로운 플레이리스트';
+
+      // 서버로 플레이리스트 생성 요청 보내기
+      fetch('/create-playlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          accessToken,
+          playlistName
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('플레이리스트가 생성되었습니다.', data);
+      })
+      .catch(error => {
+        console.error('Error:', error.message);
+      });
+    }
+  </script>
+</body>
+</html>

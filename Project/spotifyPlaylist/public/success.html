@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>로그인 성공</title>
+</head>
+<body>
+  <h1>로그인에 성공했습니다.</h1>
+  <p>앱으로 돌아가서 다른 작업을 진행하세요.</p>
+
+  <script>
+    // 프론트로 Access Token 전달
+    window.opener.postMessage('success', '*');
+    window.close();
+  </script>
+</body>
+</html>
