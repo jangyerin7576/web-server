@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>채팅</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/index.js"></script>
+  </head>
+  <body>
+    <div>
+      <ul>
+        <li><a href="/plimatelist">플리메이트 목록</a></li>
+        <li><a href="/playlists">나의 플레이리스트 목록</a></li>
+      </ul>
+    </div>
+    <div id="main">
+      <div id="chat">
+        <!-- 채팅 메시지 영역 -->
+      </div>
+      <div>
+        <input type="text" id="test" placeholder="메시지를 입력해주세요.">
+        <button onclick="send()">전송</button>
+      </div>
+    </div>
+  </body>
+</html>

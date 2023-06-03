@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playlist Player</title>
+</head>
+<body>
+  <h1>Playlist Player</h1>
+
+  <h2>Play a Playlist</h2>
+  <ul>
+    <% playlists.forEach(playlist => { %>
+      <li>
+        <span><%= playlist.name %></span>
+        <a href="/playlists/<%= playlist.id %>/play">Play</a>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

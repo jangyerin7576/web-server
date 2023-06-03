@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>채팅</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    /* 메인 */
+    #main {
+      display: relative;
+      justify-content: space-between;
+      left: 1000px;
+      margin-top: 100px;
+      border-radius: 20px;
+      background-color: lightblue;
+      width: 500px;
+      height: 700px;
+    }
+
+    /* 채팅 영역 */
+    #chat {
+      height: 90%;
+      width: 100%;
+      overflow-y: auto;
+    }
+
+     /* 접속 알림 */
+     .connect {
+       width: 90%;
+       margin: auto;
+       background-color: aquamarine;
+       text-align: center;
+       margin-top: 10px;
+     }
+
+     /* 접속 종료 알림 */
+     .disconnect {
+       width: 90%;
+       margin: auto;
+       background-color: indianred;
+       text-align: center;
+       margin-top: 10px;
+     }
+      /* 내가 보낸 메시지 */
+     .me {
+       width: 90%;
+       margin: auto;
+       background-color: lemonchiffon;
+       border-radius: 5px;
+       margin-top: 10px;
+     }
+
+     /* 상대방이 보낸 메시지 */
+     .other {
+       width: 90%;
+       margin: auto;
+       background-color: white;
+       border-radius: 5px;
+       margin-top: 10px;
+     }
+  .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .playlist {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .track-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .track {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .track img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .track-info {
+      flex-grow: 1;
+    }
+
+    .track-info h3 {
+      margin: 0;
+    }
+
+    .track-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>채팅방</h1>
+  <h2><%= chatRoom.name %></h2>
+  <p><%= chatRoom.description %></p>
+  <div>
+    <ul>
+      <li><a href="/chatRoom">채팅방 목록으로 돌아가기</a></li>
+    </ul>
+  </div>
+  <div id="main">
+    <div id="chat">
+      <!-- 채팅 영역 -->
+    </div>
+    <div>
+      <input type="text" id="test" placeholder="메시지를 입력해주세요.">
+      <button onclick="send()">전송</button>
+    </div>
+  </div>
+  <header class="header">
+    <h1>Playlist: <%= playlist.body.name %></h1>
+  </header>
+
+  <main class="playlist">
+    <h1><%= playlist.body.name %></h1>
+    <ul class="track-list">
+      <% if (playlist.body.tracks && playlist.body.tracks.items) { %>
+        <% playlist.body.tracks.items.forEach(function(track) { %>
+          <li class="track">
+            <img src="<%= track.track.album.images[0].url %>" alt="Album Art">
+            <div class="track-info">
+              <h3><%= track.track.name %></h3>
+              <p><%= track.track.artists[0].name %></p>
+              <audio controls>
+                <source src="<%= track.track.preview_url %>" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+            <!-- 삭제 버튼 -->
+	    <form action="/playlist/<%= chatRoom.id %>/<%= playlistId %>/deleteSong" method="POST">
+              <input type="hidden" name="trackId" value="<%= track.track.id %>">
+              <button type="submit">Delete</button>
+            </form>
+          </li>
+        <% }); %>
+      <% } else { %>
+        <p>No tracks found.</p>
+      <% } %>
+    </ul>
+    <!-- 플레이리스트에 노래 추가하는 폼 -->
+    <h1>add song</h1>
+    <div><a href="/searchsong/<%= playlistId %>">Search & Add Song</a></div>
+    <h1>-----------------------------------------------------------</h1>
+  </main>    
+  <script>
+      var socket = io(); // 서버에 해당 채팅방 ID로 접속
+      
+      /* 접속 되었을 때 실행 */
+      socket.on('connect', function() {
+        /* 이름을 입력받고 */
+        var name = '<%= name %>';
+        var roomId = '<%= chatRoom.id %>';
+        /* 이름이 빈칸인 경우 */
+        if (!name) {
+          name = '익명';
+        }
+
+        /* 서버에 새로운 유저가 왔다고 알림 */
+        socket.emit('newUser', name, roomId);
+      });
+
+      /* 서버로부터 데이터 받은 경우 */
+      socket.on('update', function(data) {
+        var chat = document.getElementById('chat');
+
+        var message = document.createElement('div');
+        var node = document.createTextNode(`${data.name}: ${data.message}`);
+        var className = '';
+
+        // 타입에 따라 적용할 클래스를 다르게 지정
+        switch(data.type) {
+          case 'message':
+            className = 'other';
+            break;
+
+          case 'connect':
+            className = 'connect';
+            break;
+
+          case 'disconnect':
+            className = 'disconnect';
+            break;
+        }
+
+        message.classList.add(className);
+        message.appendChild(node);
+        chat.appendChild(message);
+      });
+
+      /* 메시지 전송 함수 */
+      function send() {
+        // 입력되어있는 데이터 가져오기
+        var message = document.getElementById('test').value;
+
+        // 가져왔으니 데이터 빈칸으로 변경
+        document.getElementById('test').value = '';
+
+        // 내가 전송할 메시지 클라이언트에게 표시
+        var chat = document.getElementById('chat');
+        var msg = document.createElement('div');
+        var node = document.createTextNode(message);
+        msg.classList.add('me');
+        msg.appendChild(node);
+        chat.appendChild(msg);
+
+        // 서버로 message 이벤트 전달 + 데이터와 함께
+        socket.emit('message', {type: 'message', message: message});
+      }
+  </script>
+</body>
+</html>

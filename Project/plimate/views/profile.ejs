@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+    <p>Welcome, <%= name %>!</p>
+    <p>ID: <%= id %></p>
+    <p>Nickname: <%= nickname %></p>
+    <p>Phone Number: <%= phone %></p>
+    <div class="change">
+        <p>change my profile</p>
+        <ul>
+            <li><a href="/changeNickname">change nickname</a></li>
+            <li><a href="/changePhoneNumber">change phone number</a></li>
+	    <li><a href="/changePassword">change password</a></li>
+        </ul>
+    </div> 
+    <p><a href="/">plimate list</a></p>
+</body>
+</html>

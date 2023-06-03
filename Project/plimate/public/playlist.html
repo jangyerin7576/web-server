@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playlist Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #loadPlaylistBtn {
+      display: block;
+      margin: 20px auto;
+    }
+
+    #playlistContainer {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .playlistItem {
+      margin-bottom: 10px;
+    }
+
+    .playlistItem .name {
+      font-weight: bold;
+    }
+
+    .playlistItem .artist {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Playlist Viewer</h1>
+  <button id="loadPlaylistBtn">Load Playlist</button>
+  <div id="playlistContainer"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loadPlaylistBtn = document.getElementById('loadPlaylistBtn');
+      const playlistContainer = document.getElementById('playlistContainer');
+
+      loadPlaylistBtn.addEventListener('click', async () => {
+        try {
+          // 플레이리스트 정보 가져오기
+          const playlistId = '2jV6hkDzh846iLwnmfjCsU';
+          const playlist = await getPlaylist(playlistId);
+
+          // 플레이리스트 아이템 표시
+          renderPlaylistItems(playlist.tracks.items);
+        } catch (error) {
+          console.error('Error:', error.message);
+        }
+      });
+
+      async function getPlaylist(playlistId) {
+        try {
+          // Spotify Web API를 사용하여 플레이리스트 정보 가져오기
+          const response = await spotifyApi.getPlaylist(playlistId);
+
+          // 가져온 플레이리스트 정보를 활용하여 필요한 작업 수행
+          console.log(response.body); // 예시로 콘솔에 플레이리스트 정보 출력
+
+          // 필요한 작업을 수행한 후에는 결과를 반환하거나 다른 로직을 추가해주세요.
+          return response.body;
+        } catch (error) {
+          console.error('Error:', error);
+          // 에러 처리 로직 작성
+        }
+      }
+
+      function renderPlaylistItems(items) {
+        playlistContainer.innerHTML = '';
+
+        items.forEach(item => {
+          const trackName = item.track.name;
+          const artistName = item.track.artists[0].name;
+
+          const playlistItem = document.createElement('div');
+          playlistItem.classList.add('playlistItem');
+
+          const nameElement = document.createElement('p');
+          nameElement.classList.add('name');
+          nameElement.textContent = `Track: ${trackName}`;
+
+          const artistElement = document.createElement('p');
+          artistElement.classList.add('artist');
+          artistElement.textContent = `Artist: ${artistName}`;
+
+          playlistItem.appendChild(nameElement);
+          playlistItem.appendChild(artistElement);
+
+          playlistContainer.appendChild(playlistItem);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

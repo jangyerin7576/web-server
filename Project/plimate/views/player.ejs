@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spotify Player</title>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const token = '<%= accessToken %>'; // 서버에서 받은 액세스 토큰 사용
+      const player = new Spotify.Player({
+        name: 'Web Playback SDK Template',
+        getOAuthToken: callback => { callback(token); },
+	volume: 0.5
+      });
+
+      // 재생 준비가 완료되면 연결
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+      });
+
+      // 플레이어가 재생 중인 곡 변경 시 이벤트
+      player.addListener('player_state_changed', state => {
+        console.log('Current Track:', state.track_window.current_track);
+      });
+
+      // 오류 처리
+      player.addListener('initialization_error', ({ message }) => {
+        console.error('Failed to initialize:', message);
+      });
+      player.addListener('authentication_error', ({ message }) => {
+        console.error('Failed to authenticate:', message);
+      });
+
+      // 플레이어 연결
+      player.connect().then(success => {
+        if (success) {
+          console.log('Player connected successfully');
+        }
+      }).catch(error => {
+        console.error('Error connecting to Spotify player:', error);
+      });
+     
+      // 이전 트랙으로 전환
+      document.getElementById('previousTrack').onclick = function() {
+        player.previousTrack();
+      };
+
+      // 다음 트랙으로 전환
+      document.getElementById('nextTrack').onclick = function() {
+        player.nextTrack();
+      };
+
+      // 재생
+      document.getElementById('play').onclick = function() {
+        player.resume();
+      };
+
+      // 중지
+      document.getElementById('pause').onclick = function() {
+        player.pause();
+      };
+      // 재생/일시정지 버튼 토글 기능 추가
+      document.getElementById('togglePlay').onclick = function() {
+        player.togglePlay();
+      };
+    }
+  </script>
+  <style>
+    #player-container {
+      width: 400px;
+      height: 180px;
+      background-color: #f2f2f2;
+      margin-top: 20px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Spotify Player</h1>
+    <% console.log(accessToken);%>
+
+  <!-- 추가된 코드: 플레이어 컨테이너 -->
+  <div id="player-container"></div>
+
+  <!-- 이전 트랙으로 전환 버튼 -->
+  <button id="previousTrack">Previous Track</button>
+
+  <!-- 다음 트랙으로 전환 버튼 -->
+  <button id="nextTrack">Next Track</button>
+
+  <!-- 재생 버튼 -->
+  <button id="play">Play</button>
+
+  <!-- 중지 버튼 -->
+  <button id="pause">Pause</button>
+
+  <!-- 재생/일시정지 버튼 -->
+  <button id="togglePlay">Toggle Play</button>
+</body>
+</html>
+

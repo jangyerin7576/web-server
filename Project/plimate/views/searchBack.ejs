@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title>Playlist</title>
+  <style>
+    /* Reset CSS */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .tracks-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .tracks-item img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tracks</h1>
+  <div class="tracks-container">
+	  <% tracks.forEach( function( track, index){ %>
+      <div class="tracks-item">
+        <a href="/searching/<%= track.id %>" class="track-link">
+          <img src="<%= track.album.images[0].url %>" alt="track Image" class="track-image">
+          <div class="track-name"><%= track.name %></div>
+          <div class="artist-name"><%=track.artists[0].name %><div>
+	 <audio controls>
+                <source src="<%= track.preview_url %>" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+	</a>
+      
+      </div>
+      <% }); %>
+
+  </div>
+  <div>
+      <ul>
+	      <!-- <li><a href="/plimatelist">playlist</a></li> -->
+      </ul>
+    </div>
+</body>
+</html>
