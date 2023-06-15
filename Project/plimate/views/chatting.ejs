@@ -5,12 +5,16 @@
   <title>채팅</title>
   <script src="/socket.io/socket.io.js"></script>
   <style>
+    body {
+      width: 1500px;
+    } 
     /* 메인 */
     #main {
       display: relative;
       justify-content: space-between;
       left: 1000px;
       margin-top: 100px;
+      margin-left: 100px;
       border-radius: 20px;
       background-color: lightblue;
       width: 500px;
@@ -106,6 +110,22 @@
       font-size: 14px;
       color: #888;
     }
+    .header {
+      width: 660px;
+      position: relative;
+    }
+    
+    .playlist {
+      position: inline-block;
+      width: 600px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .send {
+      margin-left: 140px;
+    }
+
   </style>
 </head>
 <body>
@@ -121,7 +141,7 @@
     <div id="chat">
       <!-- 채팅 영역 -->
     </div>
-    <div>
+    <div class="send">
       <input type="text" id="test" placeholder="메시지를 입력해주세요.">
       <button onclick="send()">전송</button>
     </div>
@@ -131,7 +151,6 @@
   </header>
 
   <main class="playlist">
-    <h1><%= playlist.body.name %></h1>
     <ul class="track-list">
       <% if (playlist.body.tracks && playlist.body.tracks.items) { %>
         <% playlist.body.tracks.items.forEach(function(track) { %>
@@ -159,8 +178,7 @@
     <!-- 플레이리스트에 노래 추가하는 폼 -->
     <h1>add song</h1>
     <div><a href="/searchsong/<%= playlistId %>">Search & Add Song</a></div>
-    <h1>-----------------------------------------------------------</h1>
-  </main>    
+  </main>   
   <script>
       var socket = io(); // 서버에 해당 채팅방 ID로 접속
       

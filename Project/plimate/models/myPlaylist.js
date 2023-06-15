@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
   const myPlaylist = sequelize.define("myPlaylist", {
     myPlaylistNo: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       primaryKey: true
     },
     createdDate: {

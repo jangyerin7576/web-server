@@ -1,54 +1,317 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>플리메이트</title>
+    <meta charset="UTF-8">
+    <!-- 각 브라우저의 기본 스타일을 초기화 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <!-- 구글 폰트: main.css보다 먼저 불러올 수 있도록 한다 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!-- Google material Icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- main.css -->
+    <link rel="stylesheet" href="./signup.css">
+    <title>signup</title>
+    <style>
+        body
+        {
+        background-color: #24222c;
+        }
+        .desktop-22
+        {
+        position:absolute;
+        background-color:#24222c;
+        height:100%;
+        width:100%;
+        padding:0px;
+        }
+        .plimate
+        {
+	text-decoration-line: none;
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:36px;
+        font-family:Inter;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        left:280px;
+        top:59px;
+        position:absolute;
+        width:155px;
+        }
+        .group2
+        {
+        width:84px;
+        height:88px;
+        top: -35px;
+        left:85px;
+        position:absolute;
+        }
+        .rectangle6
+        {
+        background-color:#a6f5b8;
+        height:61.468658447265625px;
+        width:17.16521644592285px;
+        top:84.53px;
+        left:75.99px;
+        position:absolute;
+        }
+        .rectangle7
+        {
+        background-color:#dcf4ff;
+        height:88px;
+        width:24.104347229003906px;
+        top:57.99px;
+        left:101.2px;
+        position:absolute;
+        }
+        .rectangle8
+        {
+        background-color:#d0a2a2;
+        height:44.131343841552734px;
+        width:26.660869598388672px;
+        top:101.86px;
+        left:133.33px;
+        position:absolute;
+        }
+        .id
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:20px;
+        font-family:Inter;
+        left:622px;
+        top:235px;
+        width:20px;
+        height:24px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .password
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:20px;
+        font-family:Inter;
+        left:558px;
+        top:322px;
+        width:95px;
+        height:24px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .name
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:20px;
+        font-family:Inter;
+        left:587px;
+        top:409px;
+        width:57px;
+        height:24px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .rectangle9
+        {
+        background-color:#d9d9d9;
+        height:42px;
+        width:345px;
+        border-radius:10px;
+        top:226px;
+        left:660px;
+        position:absolute;
+        }
+        .rectangle12
+        {
+        background-color:#d9d9d9;
+        height:42px;
+        width:345px;
+        border-radius:10px;
+        top:315px;
+        left:660px;
+        position:absolute;
+        }
+
+        .mobilenumber
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:20px;
+        font-family:Inter;
+        left:495px;
+        top:500px;
+        width:148px;
+        height:24px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .nickname
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:20px;
+        font-family:Inter;
+        left:548px;
+        top:590px;
+        width:97px;
+        height:24px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .rectangle14
+        {
+        background-color:#d9d9d9;
+        height:42px;
+        width:345px;
+        border-radius:10px;
+        top:493px;
+        left:660px;
+        position:absolute;
+        }
+        .rectangle19
+        {
+        background-color:#d9d9d9;
+        height:42px;
+        width:345px;
+        border-radius:10px;
+        top:404px;
+        left:660px;
+        position:absolute;
+        }
+        .rectangle15
+        {
+        background-color:#d9d9d9;
+        height:42px;
+        width:345px;
+        border-radius:10px;
+        top:582px;
+        left:660px;
+        position:absolute;
+        }
+
+        .polygon13
+        {
+        background-color:#d9d9d9;
+        height:26.2667236328125px;
+        width:20.000301361083984px;
+        transform:rotate(-91deg);
+        top:459.41px;
+        left:1216.55px;
+        position:absolute;
+        }
+        .polygon14
+        {
+        background-color:#d9d9d9;
+        height:26.248798370361328px;
+        width:20.000288009643555px;
+        transform:rotate(-90deg);
+        top:744.31px;
+        left:1213.4px;
+        position:absolute;
+        }
+        .rectangle122
+        {
+        background-color:#67a6e1;
+        height:50px;
+        width:163px;
+        border-radius:50px;
+        top:655px;
+        left:745px;
+        position:absolute;
+        }
+
+        .done
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:24px;
+        font-family:Inter;
+        left:795px;
+        top:665px;
+        width:61px;
+        height:29px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .singup
+        {
+        color:#ffffff;
+        text-align:left;
+        vertical-align:text-top;
+        font-size:29px;
+        font-family:Inter;
+        left:370px;
+        top:155px;
+        width:146px;
+        height:44px;
+        position:absolute;
+        line-height:auto;
+        border-style:hidden;
+        outline:none;
+        }
+        .ellipse9
+        {
+        background-color:#d9d9d9;
+        height:37px;
+        width:37px;
+        top:150px;
+        left:297px;
+        position:absolute;
+        border-radius:50%;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="title">
-                <i class="fab fa-pied-piper-square"></i>
-                <a href="/">플리메이트</a>
-            </div>
-            <div class="menu_bar">
-                <ul>
-                    <li><a href="/logInPli">login</a></li>
-                    <li><a href="/register">register</a></li>
-                </ul>
-            </div>
+    <div id='desktop-22' class='desktop-22'>
+        <a href="/" id='plimate' class='plimate'>PLIMATE</a>
+        <div id='group2' class='group2'>
+            <div id='rectangle6' class='rectangle6'></div>
+            <div id='rectangle7' class='rectangle7'></div>
+            <div id='rectangle8' class='rectangle8'></div>
         </div>
-    </nav>
-    <section>
-        <div class="container_form">
-            <form method="post">
-                <ul>
-                    <li>
-                        <label>아이디</label>
-                        <input type="text" name='id' required>
-                    </li>
-                    <li>
-                        <label>비밀번호</label>
-                        <input type="password" name="pw" required>
-                    </li>
-                    <li>
-                        <label>이름</label>
-                        <input type="text" name="name" required>
-                    </li>
-                    <li>
-                        <label>핸드폰번호</label>
-                        <input type="number" name="phone" required>
-                    </li>
-		    <li>
-			<label>닉네임</label>
-                        <input type="text" name='nickname' required>
-		    </li>
-                </ul>
-                <input type="submit" value="회원가입">
-            </form>
-        </div>
-    </section>
+        <form method="post">
+            <div id='id' class='id'>ID</div>
+            <div id='password' class='password'>Password</div>
+            <div id='name' class='name'>Name</div>
+            <input type="text" name="id" id='rectangle9' class='rectangle9' required></input>
+            <input type="password" name="pw" id='rectangle12' class='rectangle12' required></input>
+            <div id='mobilenumber' class='mobilenumber'>Mobile Number</div>
+            <div id='nickname' class='nickname'>Nickname</div>
+            <input type="number" name="phone" id='rectangle14' class='rectangle14' required></input>
+            <input type="text" name="name" id='rectangle19' class='rectangle19' required></input>
+            <input type="text" name="nickname" id='rectangle15' class='rectangle15' required></input>
+            <div id='ellipse4' class='ellipse4'></div>
+            <div id='polygon12' class='polygon12'></div>
+            <input type="submit" style="color: transparent;" value="" id='rectangle122' class='rectangle122'></input>
+            <div id='done' class='done'>Done</div>
+            <div id='singup' class='singup'>SING UP </div>
+            <div id='ellipse9' class='ellipse9'></div>
+        </form>
+    </div>        
 </body>
 </html>

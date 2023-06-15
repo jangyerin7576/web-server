@@ -85,7 +85,7 @@ app.get('/login', function(req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
+  var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private streaming';
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -158,6 +158,12 @@ app.get('/callback', function(req, res) {
         request.get(options, function(error, response, body) {
           console.log(body);
         });
+	connection.query('select * from users where memberId=?',[req.session.user],(err,data)=>{
+        if(data.length == 0){
+	    console.log('users table')
+            connection.query('insert into users(memberId, linkedAccount) values(?,?)',[req.session.user, 'spotify']);
+        }
+    });
 	res.redirect('/plimatelist');
         // we can also pass the token to the browser to make requests from there
         //res.redirect('/#' +
@@ -519,7 +525,7 @@ io.sockets.on('connection',(socket)=>{
         console.log(chatRoom);
 	//chatRoom.users.push(name);
         console.log(chatRoom);
-        // 모든 소켓에게 전송
+        //해당 소켓에게 전송
         io.to(roomId).emit('update', { type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.' });
     })
 	
@@ -655,14 +661,12 @@ app.post('/playlist/:roomId/:playlistId/deleteSong', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete song from playlist' });
   }
 });
-
 // 플레이리스트 생성
 app.post('/createPlaylist', async (req, res) => {
     const playlistName = req.body.playlistName;
 
     try {
         const playlist = await spotifyApi.createPlaylist(playlistName);
-	
 	console.log("플레이리스트 생성");
 	console.log(playlist);
 	res.redirect(`/playlist/${playlist.body.id}`);
@@ -776,7 +780,6 @@ app.post('/chatSearchingPli', async(req,res)=>{
                 console.log("something went wrong!",err);
         });
 });
-
 
 server.listen(80,() => {
     console.log(`Server running on port: ${port}`);
